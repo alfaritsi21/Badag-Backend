@@ -27,7 +27,7 @@ const fileFilter = (request, file, callback) => {
 };
 
 const limits = { fileSize: 1024 * 1024 * 1 };
-let upload = multer({ storage, fileFilter, limits }).single("product_image");
+let upload = multer({ storage, fileFilter, limits }).single("image");
 
 const uploadFilter = (request, response, next) => {
     upload(request, response, function (err) {
