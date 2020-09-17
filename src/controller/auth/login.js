@@ -37,7 +37,7 @@ module.exports = {
                                     user_status
                                 }
 
-                                const token = jwt.sign(payload, "SECRETS", { expiresIn: "24" })
+                                const token = jwt.sign(payload, "SECRETS", { expiresIn: "1h" })
                                 payload = { ...payload, token }
                                 return helper.response(response, 200, `Login success!, Wellcome ${user_name}`, payload);
                             } else {
