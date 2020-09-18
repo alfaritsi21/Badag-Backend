@@ -7,10 +7,7 @@ const {
   userActivation,
   userCompanyActivation,
 } = require("../controller/auth/login");
-const { getUserid } = require("../controller/user");
 
-const { getUserByIdRedis } = require("../middleware/Redis");
-const { loginUser, loginCompany } = require("../controller/auth/login");
 const {
   getUserid,
   updateImageProfile,
