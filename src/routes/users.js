@@ -12,7 +12,8 @@ const {
   getUserid,
   updateImageProfile,
   updateProfile,
-  resetPasswordUser,
+  resetPassword,
+  resetPasswordComp,
 } = require("../controller/user");
 
 const { getUserByIdRedis, clearDataRedis } = require("../middleware/Redis");
@@ -25,7 +26,9 @@ router.get("/:id", authUser, getUserByIdRedis, getUserid);
 router.get("/activation/:id", userActivation);
 router.get("/activation-company/:id", userCompanyActivation);
 
-router.patch("/password/:id", resetPasswordUser);
+router.patch("/password/:id", resetPassword);
+router.patch("/password-company/:id", resetPasswordComp);
+
 router.patch("/profile/:id", authUser, clearDataRedis, updateProfile);
 router.patch(
   "/:id",

@@ -1,7 +1,14 @@
+const bcrypt = require("bcrypt");
+
 const helper = require("../helper/index");
 const { getSkillByUserId } = require("../model/skill");
 
-const { getUserByid, patchUser, resetPasswordUser } = require("../model/user");
+const {
+  getUserByid,
+  patchUser,
+  resetPasswordUser,
+  resetPasswordCompany,
+} = require("../model/user");
 
 const redis = require("redis");
 const client = redis.createClient();
@@ -149,15 +156,36 @@ module.exports = {
       return helper.response(response, 400, "Bad Request", error);
     }
   },
-  resetPasswordUser: async (request, response) => {
+  resetPassword: async (request, response) => {
     try {
       const { id } = request.params;
       const { user_password } = request.body;
 
+      const salt = bcrypt.genSaltSync(10);
+      const password_encrypt = bcrypt.hashSync(user_password, salt);
+
       const setData = {
-        user_password,
+        user_password: password_encrypt,
       };
       const result = await resetPasswordUser(setData, id);
+
+      return helper.response(response, 201, "New Password Added", result);
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error);
+    }
+  },
+  resetPasswordComp: async (request, response) => {
+    try {
+      const { id } = request.params;
+      const { company_password } = request.body;
+
+      const salt = bcrypt.genSaltSync(10);
+      const password_encrypt = bcrypt.hashSync(company_password, salt);
+
+      const setData = {
+        company_password: password_encrypt,
+      };
+      const result = await resetPasswordCompany(setData, id);
 
       return helper.response(response, 201, "New Password Added", result);
     } catch (error) {

@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const helper = require("../../helper");
 const mailer = require("../../utilities/mailer");
+const mailTemplate = require("../../utilities/mailTemplate");
 
 const {
   check_email_worker,
@@ -64,10 +65,10 @@ module.exports = {
         const id = data_result.result.insertId;
         const link = `http://127.0.0.1:3001/activation/${id}`;
         mailer.send(
-          "arif.0496.rahman@gmail.com",
+          "arqi.alfaritsi21@gmail.com",
           "Aktivasi woy",
           "Haiiiiii",
-          `Link Aktivasi : ${link}`
+          mailTemplate.activation(link)
         );
         return helper.response(response, 200, "Register Success", form_data);
       }
@@ -100,10 +101,7 @@ module.exports = {
     try {
       const check_email = await check_email_recruiter(form_data.company_email);
       const check_phone = await check_phone_recruiter(form_data.company_phone);
-      console.log(form_data.company_name);
-      // const check_company_name = await check_company_name(
-      //   form_data.company_name
-      // );
+      const check_name = await check_company_name(form_data.company_name);
 
       if (form_data.company_username === "") {
         return helper.response(response, 400, "Name must be filled");
@@ -120,12 +118,12 @@ module.exports = {
         return helper.response(response, 400, "Email has already registered");
       } else if (form_data.company_name === "") {
         return helper.response(response, 400, "Company Name must be filled");
-        // } else if (check_company_name.length > 0) {
-        //   return helper.response(
-        //     response,
-        //     400,
-        //     "Company Name has already registered"
-        //   );
+      } else if (check_name.length > 0) {
+        return helper.response(
+          response,
+          400,
+          "Company Name has already registered"
+        );
       } else if (form_data.company_position === "") {
         return helper.response(response, 400, "Position must be filled");
       } else if (form_data.company_phone === "") {
@@ -145,16 +143,17 @@ module.exports = {
       } else if (password != re_password) {
         return helper.response(response, 400, "Password doesn't match");
       } else {
-        const data_result = await post_recruiter(form_data);
-        const id = data_result.result.insertId;
-        const link = `http://127.0.0.1:3001/company/activation-company/${id}`;
+        // const data_result = await post_recruiter(form_data);
+        const id = 10;
+
+        const link = `http://127.0.0.1:3001/users/activation-company/${id}`;
         mailer.send(
           "arqi.alfaritsi21@gmail.com",
           "Aktivasi woy",
           "Haiiiiii",
-          `Link Aktivasi : ${link}`
+          mailTemplate.activation(link)
         );
-        return helper.response(response, 200, "Register Success", data_result);
+        return helper.response(response, 200, "Register Success", form_data);
       }
     } catch (error) {
       return helper.response(response, 400, "Bad Request");
