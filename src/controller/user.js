@@ -25,9 +25,10 @@ module.exports = {
                     image: user[0].user_image,
                     phone: user[0].user_phone,
                     email: user[0].user_email,
-                    job_desk: user[0].user_jobdesk,
-                    place: user[0].domisili,
-                    work_place: user[0].work_place,
+                    job_time: user[0].user_time_job,
+                    job: user[0].user_job,
+                    place: user[0].user_location,
+                    work_location: user[0].user_work_location,
                     user_description: user[0].user_description,
                     skills: dataSkill
                 }
@@ -85,18 +86,18 @@ module.exports = {
     updateProfile: async (request, response) => {
         try {
             const { id } = request.params
-            const { user_name, user_jobdesk, domisili, work_place, user_description } = request.body
+            const { user_name, user_job, user_location, user_work_location, user_description } = request.body
             const user = await getUserByid(id)
             if (user.length > 0) {
                 if (user_name !== "") {
-                    if (user_jobdesk !== "") {
-                        if (domisili !== "") {
-                            if (work_place) {
+                    if (user_job !== "") {
+                        if (user_location !== "") {
+                            if (user_work_location) {
                                 const setData = {
                                     user_name,
-                                    user_jobdesk,
-                                    domisili,
-                                    work_place,
+                                    user_job,
+                                    user_location,
+                                    user_work_location,
                                     user_description
                                 }
                                 const result = await patchUser(setData, id);
