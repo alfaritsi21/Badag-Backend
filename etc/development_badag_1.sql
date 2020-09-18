@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 17 Sep 2020 pada 10.25
+-- Waktu pembuatan: 18 Sep 2020 pada 06.00
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 7.3.2
 
@@ -32,6 +32,8 @@ CREATE TABLE `company` (
   `company_id` int(11) NOT NULL,
   `company_username` varchar(150) NOT NULL,
   `company_email` varchar(150) NOT NULL,
+  `company_image` varchar(150) NOT NULL,
+  `company_cover_image` varchar(150) NOT NULL,
   `company_name` varchar(150) NOT NULL,
   `company_position` varchar(150) NOT NULL,
   `company_phone` varchar(20) NOT NULL,
@@ -45,8 +47,8 @@ CREATE TABLE `company` (
 -- Dumping data untuk tabel `company`
 --
 
-INSERT INTO `company` (`company_id`, `company_username`, `company_email`, `company_name`, `company_position`, `company_phone`, `company_password`, `company_created_at`, `company_updated_at`, `company_status`) VALUES
-(1, 'admin', 'admin@gmail.com', 'admin', 'freelance', '12312312', '$2b$10$HxKNPj5ehWyJdwupxis9vOzVv1HrYe5QL13LIQ0FXA5Zv/mTD3xLm', '2020-09-14 17:00:00', '2020-09-15 13:32:55', 1);
+INSERT INTO `company` (`company_id`, `company_username`, `company_email`, `company_image`, `company_cover_image`, `company_name`, `company_position`, `company_phone`, `company_password`, `company_created_at`, `company_updated_at`, `company_status`) VALUES
+(1, 'admin', 'admin@gmail.com', 'profile.png', 'cover.png', 'admin', 'freelance', '12312312', '$2b$10$HxKNPj5ehWyJdwupxis9vOzVv1HrYe5QL13LIQ0FXA5Zv/mTD3xLm', '2020-09-18 04:00:14', '2020-09-15 13:32:55', 1);
 
 -- --------------------------------------------------------
 
@@ -58,9 +60,17 @@ CREATE TABLE `experiences` (
   `id` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `company` varchar(50) NOT NULL,
+  `position` varchar(150) NOT NULL,
   `date` date NOT NULL,
   `description` tinytext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `experiences`
+--
+
+INSERT INTO `experiences` (`id`, `id_user`, `company`, `position`, `date`, `description`) VALUES
+(2, 1, 'pt maju mundur cantik', 'backend', '2020-09-17', 'oke bagus sekali');
 
 -- --------------------------------------------------------
 
@@ -100,7 +110,8 @@ CREATE TABLE `message` (
 --
 
 INSERT INTO `message` (`id_message`, `roomchat_id`, `sender`, `receive`, `message`, `created_at`) VALUES
-(0, 5199, 1, 1, '[object Object]', '2020-09-17 06:54:02');
+(0, 5199, 1, 1, '[object Object]', '2020-09-17 06:54:02'),
+(0, 8387, 1, 1, '[object Object]', '2020-09-17 08:29:18');
 
 -- --------------------------------------------------------
 
@@ -113,7 +124,8 @@ CREATE TABLE `portofolio` (
   `user_id` int(11) NOT NULL,
   `app_name` varchar(150) NOT NULL,
   `link_repository` varchar(150) NOT NULL,
-  `type_portofolio` int(1) NOT NULL
+  `type_portofolio` int(1) NOT NULL,
+  `image_portofolio` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -136,7 +148,9 @@ CREATE TABLE `roomchat` (
 
 INSERT INTO `roomchat` (`id`, `id_roomchat`, `user_id`, `created_at`, `update_at`) VALUES
 (7, 5199, 1, '2020-09-17 06:54:01', '0000-00-00 00:00:00'),
-(8, 5199, 1, '2020-09-17 06:54:01', '0000-00-00 00:00:00');
+(8, 5199, 1, '2020-09-17 06:54:01', '0000-00-00 00:00:00'),
+(9, 8387, 1, '2020-09-17 08:29:18', '0000-00-00 00:00:00'),
+(10, 8387, 1, '2020-09-17 08:29:18', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -171,9 +185,10 @@ CREATE TABLE `users` (
   `user_image` varchar(255) NOT NULL,
   `user_phone` varchar(20) NOT NULL,
   `user_name` varchar(150) NOT NULL,
-  `user_jobdesk` varchar(255) NOT NULL,
-  `domisili` varchar(255) NOT NULL,
-  `work_place` varchar(255) NOT NULL,
+  `user_job` varchar(255) NOT NULL,
+  `user_time_job` int(1) NOT NULL,
+  `user_location` varchar(255) NOT NULL,
+  `user_work_location` varchar(100) NOT NULL,
   `user_description` text NOT NULL,
   `user_created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -184,8 +199,8 @@ CREATE TABLE `users` (
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`user_id`, `user_email`, `user_password`, `user_image`, `user_phone`, `user_name`, `user_jobdesk`, `domisili`, `work_place`, `user_description`, `user_created_at`, `user_updated_at`, `user_status`) VALUES
-(1, 'admin@gmail.com', '$2b$10$HxKNPj5ehWyJdwupxis9vOzVv1HrYe5QL13LIQ0FXA5Zv/mTD3xLm', 'profile.png', '822401573', 'admin', 'freelancer', 'jakarta', 'jakarta', 'lorem ipsum masegfhjgy hbyuhuyh hguyhuy', '2020-09-17 07:37:23', '2020-09-15 12:54:05', 1);
+INSERT INTO `users` (`user_id`, `user_email`, `user_password`, `user_image`, `user_phone`, `user_name`, `user_job`, `user_time_job`, `user_location`, `user_work_location`, `user_description`, `user_created_at`, `user_updated_at`, `user_status`) VALUES
+(1, 'admin@gmail.com', '$2b$10$HxKNPj5ehWyJdwupxis9vOzVv1HrYe5QL13LIQ0FXA5Zv/mTD3xLm', '2020-09-17T15-03-20.158Z-frontend.png', '822401573', 'galuh', 'oke bagus', 0, 'adsasdas', '', 'asdawdsadas', '2020-09-17 15:08:14', '2020-09-15 12:54:05', 1);
 
 --
 -- Indexes for dumped tables
@@ -247,7 +262,7 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT untuk tabel `experiences`
 --
 ALTER TABLE `experiences`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `job_type`
@@ -265,7 +280,7 @@ ALTER TABLE `portofolio`
 -- AUTO_INCREMENT untuk tabel `roomchat`
 --
 ALTER TABLE `roomchat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `skills`
