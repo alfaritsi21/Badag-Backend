@@ -7,14 +7,12 @@ const {
   userActivation,
   userCompanyActivation,
 } = require("../controller/auth/login");
-const { getUserid } = require("../controller/user");
 
-const { getUserByIdRedis } = require("../middleware/Redis");
-const { loginUser, loginCompany } = require("../controller/auth/login");
 const {
   getUserid,
   updateImageProfile,
   updateProfile,
+  resetPasswordUser,
 } = require("../controller/user");
 
 const { getUserByIdRedis, clearDataRedis } = require("../middleware/Redis");
@@ -27,7 +25,7 @@ router.get("/:id", authUser, getUserByIdRedis, getUserid);
 router.get("/activation/:id", userActivation);
 router.get("/activation-company/:id", userCompanyActivation);
 
-module.exports = router;
+router.patch("/password/:id", resetPasswordUser);
 router.patch("/profile/:id", authUser, clearDataRedis, updateProfile);
 router.patch(
   "/:id",

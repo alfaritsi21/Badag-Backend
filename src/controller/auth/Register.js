@@ -97,13 +97,13 @@ module.exports = {
       company_status: 0,
       company_created_at: new Date(),
     };
-    console.log(form_data);
     try {
       const check_email = await check_email_recruiter(form_data.company_email);
       const check_phone = await check_phone_recruiter(form_data.company_phone);
-      const check_company_name = await check_company_name(
-        form_data.company_name
-      );
+      console.log(form_data.company_name);
+      // const check_company_name = await check_company_name(
+      //   form_data.company_name
+      // );
 
       if (form_data.company_username === "") {
         return helper.response(response, 400, "Name must be filled");
@@ -120,15 +120,15 @@ module.exports = {
         return helper.response(response, 400, "Email has already registered");
       } else if (form_data.company_name === "") {
         return helper.response(response, 400, "Company Name must be filled");
-      } else if (check_company_name.length > 0) {
-        return helper.response(
-          response,
-          400,
-          "Company Name has already registered"
-        );
+        // } else if (check_company_name.length > 0) {
+        //   return helper.response(
+        //     response,
+        //     400,
+        //     "Company Name has already registered"
+        //   );
       } else if (form_data.company_position === "") {
         return helper.response(response, 400, "Position must be filled");
-      } else if (form_data.user_phone === "") {
+      } else if (form_data.company_phone === "") {
         return helper.response(response, 400, "Phone must be filled");
       } else if (check_phone.length > 0) {
         return helper.response(
@@ -149,7 +149,7 @@ module.exports = {
         const id = data_result.result.insertId;
         const link = `http://127.0.0.1:3001/company/activation-company/${id}`;
         mailer.send(
-          "a1.arifrahman.1213@gmail.com",
+          "arqi.alfaritsi21@gmail.com",
           "Aktivasi woy",
           "Haiiiiii",
           `Link Aktivasi : ${link}`
