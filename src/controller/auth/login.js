@@ -146,7 +146,7 @@ module.exports = {
       const setData = {
         company_status: 1,
       };
-      const result = await userActivation(setData, id);
+      const result = await userCompanyActivation(setData, id);
 
       return helper.response(response, 201, "Activated Succesfully", result);
     } catch (error) {

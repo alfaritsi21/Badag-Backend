@@ -45,7 +45,7 @@ module.exports = {
   userCompanyActivation: (setData, id) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        "UPDATE company SET ? WHERE user_id = ?",
+        "UPDATE company SET ? WHERE company_id = ?",
         [setData, id],
         (error, result) => {
           if (!error) {

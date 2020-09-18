@@ -14,7 +14,6 @@ module.exports = {
   },
 
   check_email_recruiter: (email) => {
-    console.log(email);
     return new Promise((resolve, reject) => {
       connection.query(
         "SELECT company_email FROM company WHERE company_email = ?",
@@ -65,7 +64,7 @@ module.exports = {
         data_form,
         (error, result) => {
           if (!error) {
-            const res = { result };
+            const res = { data_form };
             resolve(res);
           } else {
             reject(new Error(error));
