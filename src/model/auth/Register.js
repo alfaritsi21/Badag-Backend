@@ -49,7 +49,8 @@ module.exports = {
   check_company_name: (name) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT * FROM company WHERE company_name = "arqiqcorp"`,
+        "SELECT company_name FROM company WHERE company_name = ?",
+        name,
         (error, result) => {
           !error ? resolve(result) : reject(new Error(error));
         }
