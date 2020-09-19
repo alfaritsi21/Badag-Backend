@@ -21,23 +21,21 @@ module.exports = {
     try {
       const { id } = request.params;
 
-      const user = await getUserByid(id)
+      const user = await getUserByid(id);
       if (user.length > 0) {
-
-        let dataSkill = []
-        const skill = await getSkillByUserId(id)
+        let dataSkill = [];
+        const skill = await getSkillByUserId(id);
 
         if (skill.length > 0) {
           for (let i = 0; i < skill.length; i++) {
-            dataSkill = [...dataSkill, skill[i].skill]
+            dataSkill = [...dataSkill, skill[i].skill];
           }
         } else {
-          dataSkill = []
+          dataSkill = [];
         }
 
-
-        let dataExperience = []
-        const experience = await getExperienceByUserId(id)
+        let dataExperience = [];
+        const experience = await getExperienceByUserId(id);
 
         if (experience.length > 0) {
           for (let i = 0; i < experience.length; i++) {
@@ -46,29 +44,28 @@ module.exports = {
               company: experience[i].company,
               position: experience[i].position,
               date: experience[i].date,
-              description: experience[i].description
-            }
+              description: experience[i].description,
+            };
             dataExperience = [...dataExperience, data];
           }
         } else {
-          dataExperience = [...dataExperience, "your experience is empty"]
+          dataExperience = [...dataExperience, "your experience is empty"];
         }
 
-        let dataPortofolio = []
-        const portofolio = await getPortofolioByUserId(id)
+        let dataPortofolio = [];
+        const portofolio = await getPortofolioByUserId(id);
 
         if (portofolio.length > 0) {
           for (let i = 0; i < portofolio.length; i++) {
             let data = {
               id_app: portofolio[i].portofolio_id,
               app_name: portofolio[i].app_name,
-              image_app: portofolio[i].image_portofolio
-            }
+              image_app: portofolio[i].image_portofolio,
+            };
             dataPortofolio = [...dataExperince, data];
-
           }
         } else {
-          dataPortofolio = [...dataPortofolio, "your portofolio is empty"]
+          dataPortofolio = [...dataPortofolio, "your portofolio is empty"];
         }
 
         const data = {
@@ -84,11 +81,16 @@ module.exports = {
           user_description: user[0].user_description,
           skills: dataSkill,
           experience: dataExperience,
-          portofolio: dataPortofolio
-        }
+          portofolio: dataPortofolio,
+        };
 
         client.setex(`getuserbyid:${id}`, 3600, JSON.stringify(data));
-        return helper.response(response, 200, `Success get user id ${id}`, data);
+        return helper.response(
+          response,
+          200,
+          `Success get user id ${id}`,
+          data
+        );
       } else {
         return helper.response(response, 200, `data user id ${id} not found`);
       }
@@ -148,13 +150,18 @@ module.exports = {
     }
   },
 
-
-
   updateProfile: async (request, response) => {
     try {
-      const { id } = request.params
-      const { user_name, user_job, user_time_job, user_location, user_work_location, user_description } = request.body
-      const user = await getUserByid(id)
+      const { id } = request.params;
+      const {
+        user_name,
+        user_job,
+        user_time_job,
+        user_location,
+        user_work_location,
+        user_description,
+      } = request.body;
+      const user = await getUserByid(id);
       if (user.length > 0) {
         if (user_name !== "") {
           if (user_job !== "") {
@@ -166,12 +173,21 @@ module.exports = {
                   user_time_job,
                   user_location,
                   user_work_location,
-                  user_description
-                }
+                  user_description,
+                };
                 const result = await patchUser(setData, id);
-                return helper.response(response, 200, "user has updated", result);
+                return helper.response(
+                  response,
+                  200,
+                  "user has updated",
+                  result
+                );
               } else {
-                return helper.response(response, 200, `input your location first`);
+                return helper.response(
+                  response,
+                  200,
+                  `input your location first`
+                );
               }
             } else {
               return helper.response(response, 200, `input time job first`);
@@ -190,55 +206,57 @@ module.exports = {
     }
   },
   resetPassword: async (request, response) => {
+    const { email } = request.params;
+    const { user_password, re_password } = request.body;
+
+    const salt = bcrypt.genSaltSync(10);
+    const password_encrypt = bcrypt.hashSync(user_password, salt);
+
+    const setData = {
+      user_password: password_encrypt,
+    };
     try {
-      const { id } = request.params;
-      const { user_password } = request.body;
+      if (user_password.length < 8) {
+        return helper.response(
+          response,
+          400,
+          "Password must up to 8 character"
+        );
+      } else if (user_password != re_password) {
+        return helper.response(response, 400, "Password doesn't match");
+      } else {
+        const result = await resetPasswordUser(setData, email);
 
-      const salt = bcrypt.genSaltSync(10);
-      const password_encrypt = bcrypt.hashSync(user_password, salt);
-
-      const setData = {
-        user_password: password_encrypt,
-      };
-      const result = await resetPasswordUser(setData, id);
-
-      return helper.response(response, 201, "New Password Added", result);
+        return helper.response(response, 201, "New Password Added", result);
+      }
     } catch (error) {
       return helper.response(response, 400, "Bad Request", error);
     }
   },
   resetPasswordComp: async (request, response) => {
+    const { email } = request.params;
+    const { company_password, re_password } = request.body;
+
+    const salt = bcrypt.genSaltSync(10);
+    const password_encrypt = bcrypt.hashSync(company_password, salt);
+
+    const setData = {
+      company_password: password_encrypt,
+    };
     try {
-      const { id } = request.params;
-      const { company_password } = request.body;
+      if (company_password.length < 8) {
+        return helper.response(
+          response,
+          400,
+          "Password must up to 8 character"
+        );
+      } else if (company_password != re_password) {
+        return helper.response(response, 400, "Password doesn't match");
+      } else {
+        const result = await resetPasswordCompany(setData, email);
 
-      const salt = bcrypt.genSaltSync(10);
-      const password_encrypt = bcrypt.hashSync(company_password, salt);
-
-      const setData = {
-        company_password: password_encrypt,
-      };
-      const result = await resetPasswordCompany(setData, id);
-
-      return helper.response(response, 201, "New Password Added", result);
-    } catch (error) {
-      return helper.response(response, 400, "Bad Request", error);
-    }
-  },
-  resetPasswordComp: async (request, response) => {
-    try {
-      const { id } = request.params;
-      const { company_password } = request.body;
-
-      const salt = bcrypt.genSaltSync(10);
-      const password_encrypt = bcrypt.hashSync(company_password, salt);
-
-      const setData = {
-        company_password: password_encrypt,
-      };
-      const result = await resetPasswordCompany(setData, id);
-
-      return helper.response(response, 201, "New Password Added", result);
+        return helper.response(response, 201, "New Password Added", result);
+      }
     } catch (error) {
       return helper.response(response, 400, "Bad Request", error);
     }
