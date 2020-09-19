@@ -26,8 +26,8 @@ router.get("/:id", authUser, getUserByIdRedis, getUserid);
 router.get("/activation/:id", userActivation);
 router.get("/activation-company/:id", userCompanyActivation);
 
-router.patch("/password/:id", resetPassword);
-router.patch("/password-company/:id", resetPasswordComp);
+router.patch("/password/:email", resetPassword);
+router.patch("/password-company/:email", resetPasswordComp);
 
 router.patch("/profile/:id", authUser, clearDataRedis, updateProfile);
 router.patch(

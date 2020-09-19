@@ -1,7 +1,6 @@
 const connection = require("../config/mysql");
 
 module.exports = {
-
   getUserByid: (id) => {
     return new Promise((resolve, reject) => {
       connection.query(
@@ -43,15 +42,15 @@ module.exports = {
       );
     });
   },
-  resetPasswordUser: (setData, id) => {
+  resetPasswordUser: (setData, email) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        "UPDATE users SET ? WHERE user_id = ?",
-        [setData, id],
+        "UPDATE users SET ? WHERE user_email = ?",
+        [setData, email],
         (error, result) => {
           if (!error) {
             const newResult = {
-              user_id: id,
+              user_email: email,
               ...setData,
             };
             resolve(newResult);
@@ -62,15 +61,15 @@ module.exports = {
       );
     });
   },
-  resetPasswordCompany: (setData, id) => {
+  resetPasswordCompany: (setData, email) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        "UPDATE company SET ? WHERE company_id = ?",
-        [setData, id],
+        "UPDATE company SET ? WHERE company_email = ?",
+        [setData, email],
         (error, result) => {
           if (!error) {
             const newResult = {
-              user_id: id,
+              company_email: email,
               ...setData,
             };
             resolve(newResult);
