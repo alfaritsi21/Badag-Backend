@@ -36,6 +36,7 @@ module.exports = {
         }
 
 
+
         let dataExperience = []
         const experience = await getExperienceByUserId(id)
 
@@ -54,6 +55,7 @@ module.exports = {
           dataExperience = [...dataExperience, "your experience is empty"]
         }
 
+
         let dataPortofolio = []
         const portofolio = await getPortofolioByUserId(id)
 
@@ -62,14 +64,18 @@ module.exports = {
             let data = {
               id_app: portofolio[i].portofolio_id,
               app_name: portofolio[i].app_name,
+              app_type: portofolio[i].type_portofolio,
               image_app: portofolio[i].image_portofolio
             }
-            dataPortofolio = [...dataExperince, data];
+
+            dataPortofolio = [...dataPortofolio, data];
 
           }
         } else {
           dataPortofolio = [...dataPortofolio, "your portofolio is empty"]
         }
+
+
 
         const data = {
           id: id,

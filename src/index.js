@@ -1,4 +1,5 @@
 const route = require("express").Router();
+
 const users = require("./routes/users");
 const register = require("./routes/Auth");
 const home = require("./routes/Home");

@@ -50,6 +50,7 @@ module.exports = {
   clearDataRedis: (request, response, next) => {
     client.keys("*", (error, keys) => {
       keys.forEach((value) => {
+        console.log('clear data redis')
         client.del(value);
       });
       next();
