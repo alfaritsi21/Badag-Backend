@@ -65,7 +65,7 @@ module.exports = {
         const id = data_result.result.insertId;
         const link = `http://127.0.0.1:3001/activation/${id}`;
         mailer.send(
-          "arqi.alfaritsi21@gmail.com",
+          "a1.arifrahman.1213@gmail.com",
           "Aktivasi woy",
           "Haiiiiii",
           mailTemplate.activation(link)
@@ -148,7 +148,7 @@ module.exports = {
 
         const link = `http://127.0.0.1:3001/users/activation-company/${id}`;
         mailer.send(
-          "arqi.alfaritsi21@gmail.com",
+          "a1.arifrahman.1213@gmail.com",
           "Aktivasi woy",
           "Haiiiiii",
           mailTemplate.activation(link)
