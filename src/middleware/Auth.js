@@ -28,9 +28,13 @@ module.exports = {
             );
           }
         }
-      });
-    } else {
-      return helper.response(response, 400, "Please Login First !");
+    },
+    otorisasi: (request, response, next) => {
+        let { user_role } = request.body
+        if (user_role === "1") { // Pekerja
+            return helper.response(response, 403, "You didnt have permission to access this page !");
+        } else { // Bukan pekerja
+            next();
+        }
     }
-  },
-};
+}

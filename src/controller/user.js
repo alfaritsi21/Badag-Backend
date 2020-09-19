@@ -34,8 +34,9 @@ module.exports = {
           dataSkill = [];
         }
 
-        let dataExperience = [];
-        const experience = await getExperienceByUserId(id);
+        let dataExperience = []
+        const experience = await getExperienceByUserId(id)
+
 
         if (experience.length > 0) {
           for (let i = 0; i < experience.length; i++) {
@@ -60,13 +61,16 @@ module.exports = {
             let data = {
               id_app: portofolio[i].portofolio_id,
               app_name: portofolio[i].app_name,
-              image_app: portofolio[i].image_portofolio,
-            };
-            dataPortofolio = [...dataExperince, data];
+              app_type: portofolio[i].type_portofolio,
+              image_app: portofolio[i].image_portofolio
+            }
+
+            dataPortofolio = [...dataPortofolio, data];
           }
         } else {
           dataPortofolio = [...dataPortofolio, "your portofolio is empty"];
         }
+
 
         const data = {
           id: id,

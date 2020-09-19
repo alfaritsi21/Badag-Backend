@@ -13,8 +13,8 @@ module.exports = {
 
             const company = await getUserCompanyByid(id)
             if (company.length > 0) {
-
                 const {
+                    company_id,
                     company_username,
                     company_email,
                     company_image,
@@ -26,10 +26,10 @@ module.exports = {
                     company_instagram,
                     company_linkedin,
                     company_created_at
-                } = company
+                } = company[0]
 
-                const data = {
-                    company_id: id,
+                const dataSet = {
+                    company_id,
                     company_username,
                     company_email,
                     company_image,
@@ -44,8 +44,9 @@ module.exports = {
                 }
 
 
-                client.setex(`getcompanybyid:${id}`, 3600, JSON.stringify(data));
-                return helper.response(response, 200, `Success get company id ${id}`, data);
+
+                client.setex(`getcompanybyid:${id}`, 3600, JSON.stringify(dataSet));
+                return helper.response(response, 200, `Success get company id ${id}`, dataSet);
 
             } else {
                 return helper.response(response, 200, `data company id ${id} not found`);

@@ -3,7 +3,6 @@ const { search } = require("../../routes/Home");
 
 module.exports = {
   get_worker_model: (limit, offset, sort, search) => {
-    console.log(sort)
     return new Promise((resolve, reject) => {
       connection.query(`SELECT users.user_name, users.user_job, users.user_location, GROUP_CONCAT(skills.skill) AS skills, users.user_image FROM users RIGHT JOIN skills on skills.id_user = users.user_id WHERE skills.skill LIKE '%${search}%' GROUP BY skills.id_user ORDER BY ${sort} LIMIT ? OFFSET ?`, [limit, offset], (error, result) => {
         !error ? resolve(result) : reject(new Error(error));
