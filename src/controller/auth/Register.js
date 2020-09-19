@@ -28,9 +28,6 @@ module.exports = {
       user_created_at: new Date(),
     };
     try {
-      const check_email = await check_email_worker(form_data.user_email);
-      const check_phone = await check_phone_worker(form_data.user_phone);
-
       if (form_data.user_name === "") {
         return helper.response(response, 400, "Name must be filled");
       } else if (
@@ -42,35 +39,39 @@ module.exports = {
           400,
           "Email must be filled and must valid email"
         );
-      } else if (check_email.length > 0) {
-        return helper.response(response, 400, "Email has already registered");
-      } else if (form_data.user_phone === "") {
+      } else if (form_data.user_phone === null) {
         return helper.response(response, 400, "Phone Number must be filled");
-      } else if (check_phone.length > 0) {
-        return helper.response(
-          response,
-          400,
-          "Phone Number has already registered"
-        );
-      } else if (password.length < 8) {
-        return helper.response(
-          response,
-          400,
-          "Password must up to 8 character"
-        );
-      } else if (password != re_password) {
-        return helper.response(response, 400, "Password doesn't match");
       } else {
-        const data_result = await post_worker(form_data);
-        const id = data_result.result.insertId;
-        const link = `http://127.0.0.1:3001/activation/${id}`;
-        mailer.send(
-          "a1.arifrahman.1213@gmail.com",
-          "Aktivasi woy",
-          "Haiiiiii",
-          mailTemplate.activation(link)
-        );
-        return helper.response(response, 200, "Register Success", form_data);
+        const check_email = await check_email_worker(form_data.user_email);
+        const check_phone = await check_phone_worker(form_data.user_phone);
+        if (check_email.length > 0) {
+          return helper.response(response, 400, "Email has already registered");
+        } else if (check_phone.length > 0) {
+          return helper.response(
+            response,
+            400,
+            "Phone Number has already registered"
+          );
+        } else if (password.length < 8) {
+          return helper.response(
+            response,
+            400,
+            "Password must up to 8 character"
+          );
+        } else if (password != re_password) {
+          return helper.response(response, 400, "Password doesn't match");
+        } else {
+          const data_result = await post_worker(form_data);
+          const id = data_result.result.insertId;
+          const link = `http://127.0.0.1:3001/users/activation/${id}`;
+          mailer.send(
+            "a1.arifrahman.1213@gmail.com",
+            "Aktivasi woy",
+            "Haiiiiii",
+            mailTemplate.activation(link)
+          );
+          return helper.response(response, 200, "Register Success", form_data);
+        }
       }
     } catch (error) {
       return helper.response(response, 400, "Bad Request");
@@ -99,10 +100,6 @@ module.exports = {
       company_created_at: new Date(),
     };
     try {
-      const check_email = await check_email_recruiter(form_data.company_email);
-      const check_phone = await check_phone_recruiter(form_data.company_phone);
-      const check_name = await check_company_name(form_data.company_name);
-
       if (form_data.company_username === "") {
         return helper.response(response, 400, "Name must be filled");
       } else if (
@@ -114,46 +111,54 @@ module.exports = {
           400,
           "Email must be filled and must valid email"
         );
-      } else if (check_email.length > 0) {
-        return helper.response(response, 400, "Email has already registered");
       } else if (form_data.company_name === "") {
         return helper.response(response, 400, "Company Name must be filled");
-      } else if (check_name.length > 0) {
-        return helper.response(
-          response,
-          400,
-          "Company Name has already registered"
-        );
       } else if (form_data.company_position === "") {
         return helper.response(response, 400, "Position must be filled");
-      } else if (form_data.company_phone === "") {
+      } else if (form_data.company_phone === null) {
         return helper.response(response, 400, "Phone must be filled");
-      } else if (check_phone.length > 0) {
-        return helper.response(
-          response,
-          400,
-          "Phone Number has already registered"
-        );
-      } else if (password.length < 8) {
-        return helper.response(
-          response,
-          400,
-          "Password must up to 8 character"
-        );
-      } else if (password != re_password) {
-        return helper.response(response, 400, "Password doesn't match");
       } else {
-        // const data_result = await post_recruiter(form_data);
-        const id = 10;
-
-        const link = `http://127.0.0.1:3001/users/activation-company/${id}`;
-        mailer.send(
-          "a1.arifrahman.1213@gmail.com",
-          "Aktivasi woy",
-          "Haiiiiii",
-          mailTemplate.activation(link)
+        const check_email = await check_email_recruiter(
+          form_data.company_email
         );
-        return helper.response(response, 200, "Register Success", form_data);
+        const check_phone = await check_phone_recruiter(
+          form_data.company_phone
+        );
+        const check_name = await check_company_name(form_data.company_name);
+        if (check_email.length > 0) {
+          return helper.response(response, 400, "Email has already registered");
+        } else if (check_name.length > 0) {
+          return helper.response(
+            response,
+            400,
+            "Company Name has already registered"
+          );
+        } else if (check_phone.length > 0) {
+          return helper.response(
+            response,
+            400,
+            "Phone Number has already registered"
+          );
+        } else if (password.length < 8) {
+          return helper.response(
+            response,
+            400,
+            "Password must up to 8 character"
+          );
+        } else if (password != re_password) {
+          return helper.response(response, 400, "Password doesn't match");
+        } else {
+          const data_result = await post_recruiter(form_data);
+          const id = data_result.result.insertId;
+          const link = `http://127.0.0.1:3001/users/activation-company/${id}`;
+          mailer.send(
+            "a1.arifrahman.1213@gmail.com",
+            "Aktivasi woy",
+            "Haiiiiii",
+            mailTemplate.activation(link)
+          );
+          return helper.response(response, 200, "Register Success", form_data);
+        }
       }
     } catch (error) {
       return helper.response(response, 400, "Bad Request");
