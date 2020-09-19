@@ -9,7 +9,7 @@ const {
   userCompanyActivation,
 } = require("../../model/auth/login");
 
-const { JsonWebTokenError } = require("jsonwebtoken");
+
 
 module.exports = {
   loginUser: async (request, response) => {
@@ -24,32 +24,37 @@ module.exports = {
                 user_password,
                 check[0].user_password
               );
-
               if (checkPassword) {
+                console.log(check[0])
                 const {
                   user_id,
                   user_email,
                   user_name,
                   user_phone,
-                  user_status,
-                } = check[0];
+                  user_image,
+                  user_job,
+                  user_time_job,
+                  user_location,
+                  user_work_location,
+                  user_status
+                } = check[0]
 
                 let payload = {
                   user_id,
                   user_email,
                   user_name,
                   user_phone,
-                  user_status,
-                };
+                  user_image,
+                  user_job,
+                  user_time_job,
+                  user_location,
+                  user_work_location,
+                  user_status
+                }
 
-                const token = jwt.sign(payload, "SECRETS", { expiresIn: "1h" });
-                payload = { ...payload, token };
-                return helper.response(
-                  response,
-                  200,
-                  `Login success!, Wellcome ${user_name}`,
-                  payload
-                );
+                const token = jwt.sign(payload, "SECRETS", { expiresIn: "24h" })
+                payload = { ...payload, token }
+                return helper.response(response, 200, `Login success!, Wellcome ${user_name}`, payload);
               } else {
                 return helper.response(response, 400, "Wrong Password");
               }
@@ -62,6 +67,7 @@ module.exports = {
         } else {
           return helper.response(response, 400, "please input invalid email");
         }
+
       } else {
         return helper.response(response, 400, "input value first");
       }
@@ -74,8 +80,9 @@ module.exports = {
       const { company_email, company_password } = request.body;
       if (company_email !== "" && company_password !== "") {
         if (company_email.search("@") > 0) {
-          const check = await checkUserCompany(company_email);
+          const check = await checkUserCompany(company_email)
           if (check.length > 0) {
+
             if (check[0].company_status === 1) {
               const checkPassword = bcrypt.compareSync(
                 company_password,
@@ -83,28 +90,34 @@ module.exports = {
               );
 
               if (checkPassword) {
+                console.log(check[0])
                 const {
                   company_id,
                   company_email,
                   company_username,
                   company_name,
+                  company_image,
+                  company_cover_image,
                   company_position,
                   company_phone,
-                  company_status,
-                } = check[0];
+                  company_status
+                } = check[0]
 
                 let payload = {
                   company_id,
                   company_email,
                   company_username,
                   company_name,
+                  company_image,
+                  company_cover_image,
                   company_position,
                   company_phone,
-                  company_status,
-                };
+                  company_status
+                }
 
-                const token = jwt.sign(payload, "SECRETS", { expiresIn: "24" });
-                payload = { ...payload, token };
+
+                const token = jwt.sign(payload, "SECRETS", { expiresIn: "24h" })
+                payload = { ...payload, token }
                 return helper.response(response, 200, "Login success", payload);
               } else {
                 return helper.response(response, 400, "Wrong Password");

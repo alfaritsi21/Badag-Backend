@@ -30,6 +30,22 @@ module.exports = {
       }
     });
   },
+  getCompanyByIdRedis: (request, response, next) => {
+    const { id } = request.params;
+    client.get(`getcompanybyid:${id}`, (error, result) => {
+      if (!error && result !== null) {
+        console.log('data ada di redis')
+        return helper.response(
+          response,
+          200,
+          `Success get company id ${id}`,
+          JSON.parse(result)
+        );
+      } else {
+        next();
+      }
+    });
+  },
 
   clearDataRedis: (request, response, next) => {
     client.keys("*", (error, keys) => {
