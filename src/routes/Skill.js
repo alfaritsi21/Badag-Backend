@@ -1,10 +1,14 @@
-const { addSkillByUserId, getSkillByUserId, deleteSkill } = require("../controller/Skill");
-const router = require("express").Router()
+const {
+  addSkillByUserId,
+  getSkillByUserId,
+  deleteSkill,
+} = require("../controller/Skill");
+const router = require("express").Router();
 const { authUser } = require("../middleware/Auth");
+const { clearDataRedis } = require("../middleware/Redis");
 
-
-router.post("/", authUser, addSkillByUserId);
-router.get("/:id", authUser, getSkillByUserId)
-router.delete("/:id", authUser, deleteSkill)
+router.post("/", authUser, clearDataRedis, addSkillByUserId);
+router.get("/:id", authUser, getSkillByUserId);
+router.delete("/:id", authUser, clearDataRedis, deleteSkill);
 
 module.exports = router;
