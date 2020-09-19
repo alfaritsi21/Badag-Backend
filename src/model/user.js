@@ -1,6 +1,7 @@
 const connection = require("../config/mysql");
 
 module.exports = {
+
   getUserByid: (id) => {
     return new Promise((resolve, reject) => {
       connection.query(

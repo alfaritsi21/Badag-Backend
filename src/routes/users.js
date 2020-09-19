@@ -37,6 +37,5 @@ router.patch(
   clearDataRedis,
   updateImageProfile
 );
-router.get("/:id", authUser, getUserByIdRedis, getUserid);
 
 module.exports = router;

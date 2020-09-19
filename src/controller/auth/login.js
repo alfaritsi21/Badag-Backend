@@ -9,8 +9,6 @@ const {
   userCompanyActivation,
 } = require("../../model/auth/login");
 
-const { JsonWebTokenError } = require("jsonwebtoken");
-
 module.exports = {
   loginUser: async (request, response) => {
     try {
@@ -24,13 +22,18 @@ module.exports = {
                 user_password,
                 check[0].user_password
               );
-
               if (checkPassword) {
+                console.log(check[0]);
                 const {
                   user_id,
                   user_email,
                   user_name,
                   user_phone,
+                  user_image,
+                  user_job,
+                  user_time_job,
+                  user_location,
+                  user_work_location,
                   user_status,
                 } = check[0];
 
@@ -39,10 +42,17 @@ module.exports = {
                   user_email,
                   user_name,
                   user_phone,
+                  user_image,
+                  user_job,
+                  user_time_job,
+                  user_location,
+                  user_work_location,
                   user_status,
                 };
 
-                const token = jwt.sign(payload, "SECRETS", { expiresIn: "1h" });
+                const token = jwt.sign(payload, "SECRETS", {
+                  expiresIn: "24h",
+                });
                 payload = { ...payload, token };
                 return helper.response(
                   response,
@@ -83,11 +93,14 @@ module.exports = {
               );
 
               if (checkPassword) {
+                console.log(check[0]);
                 const {
                   company_id,
                   company_email,
                   company_username,
                   company_name,
+                  company_image,
+                  company_cover_image,
                   company_position,
                   company_phone,
                   company_status,
@@ -98,6 +111,8 @@ module.exports = {
                   company_email,
                   company_username,
                   company_name,
+                  company_image,
+                  company_cover_image,
                   company_position,
                   company_phone,
                   company_status,

@@ -17,18 +17,10 @@ module.exports = {
                             const userCreate = {
                                 id_roomchat: meething_id,
                                 user_id,
+                                company_id,
                                 created_at: new Date
                             }
-
                             await postRoomChat(userCreate)
-
-                            const companyCreate = {
-                                id_roomchat: meething_id,
-                                user_id: company_id,
-                                created_at: new Date
-                            }
-
-                            await postRoomChat(companyCreate)
 
 
                             const jobType = await getJobTypeById(jobType_id)
@@ -38,7 +30,7 @@ module.exports = {
                                 receive: user_id,
                                 sender: company_id,
                                 roomchat_id: meething_id,
-                                message: { name, email, phone, job: jobType[0].job_name, message },
+                                message: `From : ${name}</br> ${jobType[0].job_name}   contact : ${email}, ${phone}. <br> <p>${message}<p>`,
                                 created_at: new Date
                             }
 
