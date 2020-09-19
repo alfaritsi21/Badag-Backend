@@ -192,4 +192,22 @@ module.exports = {
       return helper.response(response, 400, "Bad Request", error);
     }
   },
+  resetPasswordComp: async (request, response) => {
+    try {
+      const { id } = request.params;
+      const { company_password } = request.body;
+
+      const salt = bcrypt.genSaltSync(10);
+      const password_encrypt = bcrypt.hashSync(company_password, salt);
+
+      const setData = {
+        company_password: password_encrypt,
+      };
+      const result = await resetPasswordCompany(setData, id);
+
+      return helper.response(response, 201, "New Password Added", result);
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error);
+    }
+  },
 };

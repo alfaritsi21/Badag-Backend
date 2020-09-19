@@ -62,6 +62,7 @@ module.exports = {
         return helper.response(response, 400, "Password doesn't match");
       } else {
         const data_result = await post_worker(form_data);
+        console.log(data_result);
         const id = data_result.result.insertId;
         const link = `http://127.0.0.1:3001/activation/${id}`;
         mailer.send(

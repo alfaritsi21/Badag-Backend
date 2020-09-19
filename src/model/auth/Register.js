@@ -64,7 +64,7 @@ module.exports = {
         data_form,
         (error, result) => {
           if (!error) {
-            const res = { data_form };
+            const res = { result };
             resolve(res);
           } else {
             reject(new Error(error));
@@ -80,7 +80,7 @@ module.exports = {
         data_form,
         (error, result) => {
           if (!error) {
-            const res = { data_form };
+            const res = { result };
             resolve(res);
           } else {
             reject(new Error(error));
