@@ -1,10 +1,10 @@
-const route = require("express").Router()
+const route = require("express").Router();
 const users = require("./routes/users");
 const register = require("./routes/Auth");
 const home = require("./routes/Home");
 const hiring = require("./routes/hiring");
 const skill = require("./routes/skill");
-const experience = require("./routes/Experience")
+const experience = require("./routes/Experience");
 const portofolio = require("./routes/Portofolio");
 const company = require("./routes/Company");
 
