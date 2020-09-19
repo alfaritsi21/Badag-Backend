@@ -14,6 +14,46 @@ module.exports = {
       }
     })
   },
+  get_chat_room_company_redis: (request, response, next) => {
+    let { company_id } = request.body
+    client.get(`get_chatroom_company,company_id:${company_id}`, (error, result) => {
+      if (!error && result != null) {
+        return helper.response(response, 200, "Get Chat Room Company Redis Success", JSON.parse(result))
+      } else {
+        next()
+      }
+    })
+  },
+  get_chat_room_worker_redis: (request, response, next) => {
+    let { user_id } = request.body
+    client.get(`get_chatroom_worker,worker_id:${user_id}`, (error, result) => {
+      if (!error && result != null) {
+        return helper.response(response, 200, "Get Chat Room Redis Worker Success", JSON.parse(result))
+      } else {
+        next()
+      }
+    })
+  },
+  get_chat_room_company_redis: (request, response, next) => {
+    let { company_id } = request.body
+    client.get(`get_chatroom_company_redis,company_id:${company_id}`, (error, result) => {
+      if (!error && result != null) {
+        return helper.response(response, 200, "Get Chat Room Redis Worker Success", JSON.parse(result))
+      } else {
+        next()
+      }
+    })
+  },
+  get_message_redis: (request, response, next) => {
+    let { roomchat_id } = request.body
+    client.get(`get_message,roomchat_id:${roomchat_id}`, (error, result) => {
+      if (!error && result != null) {
+        return helper.response(response, 200, "Get Message Redis Success", JSON.parse(result))
+      } else {
+        next()
+      }
+    })
+  },
   getUserByIdRedis: (request, response, next) => {
     const { id } = request.params;
     client.get(`getuserbyid:${id}`, (error, result) => {
