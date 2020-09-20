@@ -1,6 +1,20 @@
 const connection = require("../../config/mysql");
 
 module.exports = {
+  sendNotifHiring: (dataWorker) => {
+    return new Promise((resolve, reject) => {
+      connection.query("INSERT INTO notification SET ?", dataWorker, (error, result) => {
+        !error ? resolve(result) : reject(new Error(error));
+      });
+    });
+  },
+  sendNotifMessage: (dataNotif) => {
+    return new Promise((resolve, reject) => {
+      connection.query("INSERT INTO notification SET ?", dataNotif, (error, result) => {
+        !error ? resolve(result) : reject(new Error(error));
+      });
+    });
+  },
   get_notif_worker_model: (id_worker) => {
     return new Promise((resolve, reject) => {
       connection.query("SELECT notification.id, notification.title, notification.id_worker, notification.id_company, notification.id_sender, notification.status, company.company_image FROM notification LEFT JOIN company ON company.company_id = notification.id_sender WHERE notification.id_worker = ?", id_worker, (error, result) => {

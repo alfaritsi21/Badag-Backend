@@ -2,6 +2,7 @@ const helper = require("../helper/index");
 
 const { getJobTypeById } = require("../model/jobType");
 const { postRoomChat, postMessage } = require("../model/hiring");
+const { sendNotifHiring } = require("../model/navbar/Navbar");
 
 module.exports = {
   postMessageHiring: async (request, response) => {
@@ -39,6 +40,13 @@ module.exports = {
                 message: `From : ${name}</br> ${jobType[0].job_name}   contact : ${email}, ${phone}. <br> <p>${message}<p>`,
                 created_at: new Date(),
               };
+              const dataNotif = {
+                title: 0,
+                id_sender: company_id,
+                id_worker: user_id,
+                status: 0,
+              };
+              await sendNotifHiring(dataNotif);
 
               await postMessage(data);
 

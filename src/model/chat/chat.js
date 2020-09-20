@@ -17,13 +17,12 @@ module.exports = {
   },
   get_message: (id_roomchat) => {
     return new Promise((resolve, reject) => {
-      connection.query("SELECT company.company_id, company.company_name, company.company_image, message.message, message.created_at, message.sender, message.receive FROM message INNER JOIN roomchat on roomchat.id_roomchat = message.roomchat_id INNER JOIN company on company.company_id = roomchat.company_id WHERE roomchat.id_roomchat = ?", id_roomchat, (error, result) => {
+      connection.query("SELECT company.company_id, company.company_name, company.company_image, message.message, message.created_at, message.sender, message.receive, company.role_id AS roleid_company, users.role_id AS roleid_user FROM message INNER JOIN roomchat on roomchat.id_roomchat = message.roomchat_id INNER JOIN company on company.company_id = roomchat.company_id LEFT JOIN users ON users.user_id = roomchat.user_id WHERE roomchat.id_roomchat = ?", id_roomchat, (error, result) => {
         !error ? resolve(result) : reject(new Error(error));
       });
     });
   },
   post_message_model: (setData) => {
-    console.log(setData)
     return new Promise((resolve, reject) => {
       connection.query("INSERT INTO message SET ?", setData, (error, result) => {
         if (!error) {
