@@ -34,9 +34,8 @@ module.exports = {
           dataSkill = [];
         }
 
-        let dataExperience = []
-        const experience = await getExperienceByUserId(id)
-
+        let dataExperience = [];
+        const experience = await getExperienceByUserId(id);
 
         if (experience.length > 0) {
           for (let i = 0; i < experience.length; i++) {
@@ -62,15 +61,14 @@ module.exports = {
               id_app: portofolio[i].portofolio_id,
               app_name: portofolio[i].app_name,
               app_type: portofolio[i].type_portofolio,
-              image_app: portofolio[i].image_portofolio
-            }
+              image_app: portofolio[i].image_portofolio,
+            };
 
             dataPortofolio = [...dataPortofolio, data];
           }
         } else {
           dataPortofolio = [...dataPortofolio, "your portofolio is empty"];
         }
-
 
         const data = {
           id: id,
@@ -102,7 +100,6 @@ module.exports = {
       return helper.response(response, 400, "Bad Request", error);
     }
   },
-
   updateImageProfile: async (request, response) => {
     try {
       const { id } = request.params;
