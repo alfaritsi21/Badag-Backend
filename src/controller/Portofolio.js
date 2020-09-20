@@ -14,19 +14,19 @@ module.exports = {
                     if (link_repository !== "") {
                         let image = request.file === undefined ? "" : request.file.filename
 
-                        if (image !== "") {
-                            const data = {
-                                user_id,
-                                app_name,
-                                link_repository,
-                                type_portofolio,
-                                image_portofolio: image
-                            }
-                            const result = await postPortofolio(data)
-                            return helper.response(response, 200, "success add portofolio", result);
-                        } else {
-                            return helper.response(response, 400, "upload image portofolio");
+                        // if (image !== "") {
+                        const data = {
+                            user_id,
+                            app_name,
+                            link_repository,
+                            type_portofolio,
+                            image_portofolio: image
                         }
+                        const result = await postPortofolio(data)
+                        return helper.response(response, 200, "success add portofolio", result);
+                        // } else {
+                        //     return helper.response(response, 400, "upload image portofolio");
+                        // }
                     } else {
                         return helper.response(response, 400, "input link repository");
                     }
