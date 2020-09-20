@@ -36,7 +36,8 @@ module.exports = {
                   user_time_job,
                   user_location,
                   user_work_location,
-                  user_status
+                  user_status,
+                  role_id
                 } = check[0]
 
                 let payload = {
@@ -49,7 +50,8 @@ module.exports = {
                   user_time_job,
                   user_location,
                   user_work_location,
-                  user_status
+                  user_status,
+                  role_id
                 }
 
                 const token = jwt.sign(payload, "SECRETS", { expiresIn: "24h" })
@@ -100,7 +102,8 @@ module.exports = {
                   company_cover_image,
                   company_position,
                   company_phone,
-                  company_status
+                  company_status,
+                  role_id
                 } = check[0]
 
                 let payload = {
@@ -112,7 +115,8 @@ module.exports = {
                   company_cover_image,
                   company_position,
                   company_phone,
-                  company_status
+                  company_status,
+                  role_id
                 }
 
 
