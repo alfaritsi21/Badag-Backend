@@ -28,7 +28,7 @@ module.exports = {
 
     getPortofolioById: (id) => {
         return new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM Portofolio WHERE user_id = ?", id, (error, result) => {
+            connection.query("SELECT * FROM Portofolio WHERE portofolio_id = ?", id, (error, result) => {
                 !error ? resolve(result) : reject(new Error(error))
             })
         })
@@ -37,7 +37,7 @@ module.exports = {
     deletePortofolio: (id) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                "DELETE FROM Portofolio WHERE user_id = ?",
+                "DELETE FROM Portofolio WHERE portofolio_id = ?",
                 id,
                 (error, result) => {
                     if (!error) {

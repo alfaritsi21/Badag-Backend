@@ -14,19 +14,19 @@ module.exports = {
                     if (link_repository !== "") {
                         let image = request.file === undefined ? "" : request.file.filename
 
-                        if (image !== "") {
-                            const data = {
-                                user_id,
-                                app_name,
-                                link_repository,
-                                type_portofolio,
-                                image_portofolio: image
-                            }
-                            const result = await postPortofolio(data)
-                            return helper.response(response, 200, "success add portofolio", result);
-                        } else {
-                            return helper.response(response, 400, "upload image portofolio");
+                        // if (image !== "") {
+                        const data = {
+                            user_id,
+                            app_name,
+                            link_repository,
+                            type_portofolio,
+                            image_portofolio: image
                         }
+                        const result = await postPortofolio(data)
+                        return helper.response(response, 200, "success add portofolio", result);
+                        // } else {
+                        //     return helper.response(response, 400, "upload image portofolio");
+                        // }
                     } else {
                         return helper.response(response, 400, "input link repository");
                     }
@@ -41,6 +41,21 @@ module.exports = {
             return helper.response(response, 400, "Bad Request", error);
         }
     },
+
+    getPortofolioById: async (request, response) => {
+        try {
+            const { id } = request.params
+            const check = await getPortofolioById(id)
+            if (check.length > 0) {
+                return helper.response(response, 200, "success get portofolio by id", check);
+            } else {
+                return helper.response(response, 404, "portofolio not found");
+            }
+        } catch (error) {
+            return helper.response(response, 400, "Bad Request", error);
+        }
+    },
+
     getPortofolioByUserId: async (request, response) => {
 
         try {
