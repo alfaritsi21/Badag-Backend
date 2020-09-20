@@ -25,7 +25,7 @@ module.exports = {
                 check[0].user_password
               );
               if (checkPassword) {
-                console.log(check[0])
+
                 const {
                   user_id,
                   user_email,
@@ -92,7 +92,7 @@ module.exports = {
               );
 
               if (checkPassword) {
-                console.log(check[0])
+
                 const {
                   company_id,
                   company_email,
