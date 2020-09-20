@@ -36,6 +36,7 @@ module.exports = {
                   user_time_job,
                   user_location,
                   user_work_location,
+                  role_id,
                   user_status
                 } = check[0]
 
@@ -49,6 +50,7 @@ module.exports = {
                   user_time_job,
                   user_location,
                   user_work_location,
+                  role_id,
                   user_status
                 }
 
@@ -100,6 +102,7 @@ module.exports = {
                   company_cover_image,
                   company_position,
                   company_phone,
+                  role_id,
                   company_status
                 } = check[0]
 
@@ -112,6 +115,7 @@ module.exports = {
                   company_cover_image,
                   company_position,
                   company_phone,
+                  role_id,
                   company_status
                 }
 

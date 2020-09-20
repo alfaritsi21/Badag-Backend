@@ -5,7 +5,7 @@ const { getUserByid } = require("../model/user")
 module.exports = {
     addExperinceByUserId: async (request, response) => {
         try {
-            const { user_id, position, company_name, date, description } = request.body
+            const { user_id, position, company_name, date, date_resign, description } = request.body
             if (position !== "") {
                 if (company_name !== "") {
                     if (date !== "") {
@@ -17,6 +17,7 @@ module.exports = {
                                 position,
                                 company: company_name,
                                 date,
+                                date_resign,
                                 description
                             }
                             const result = await postExperience(data)
