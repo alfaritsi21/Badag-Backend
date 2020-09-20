@@ -25,7 +25,7 @@ module.exports = {
                 check[0].user_password
               );
               if (checkPassword) {
-                console.log(check[0])
+
                 const {
                   user_id,
                   user_email,
@@ -36,8 +36,8 @@ module.exports = {
                   user_time_job,
                   user_location,
                   user_work_location,
-                  user_status,
-                  role_id
+                  role_id,
+                  user_status
                 } = check[0]
 
                 let payload = {
@@ -50,8 +50,8 @@ module.exports = {
                   user_time_job,
                   user_location,
                   user_work_location,
-                  user_status,
-                  role_id
+                  role_id,
+                  user_status
                 }
 
                 const token = jwt.sign(payload, "SECRETS", { expiresIn: "24h" })
@@ -92,7 +92,7 @@ module.exports = {
               );
 
               if (checkPassword) {
-                console.log(check[0])
+
                 const {
                   company_id,
                   company_email,
@@ -102,8 +102,8 @@ module.exports = {
                   company_cover_image,
                   company_position,
                   company_phone,
-                  company_status,
-                  role_id
+                  role_id,
+                  company_status
                 } = check[0]
 
                 let payload = {
@@ -115,8 +115,8 @@ module.exports = {
                   company_cover_image,
                   company_position,
                   company_phone,
-                  company_status,
-                  role_id
+                  role_id,
+                  company_status
                 }
 
 

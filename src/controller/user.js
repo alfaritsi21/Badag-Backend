@@ -15,6 +15,7 @@ const client = redis.createClient();
 const fs = require("fs");
 const { getExperienceByUserId } = require("../model/Experience");
 const { getPortofolioByUserId } = require("../model/Portofolio");
+const Experience = require("../model/Experience");
 
 module.exports = {
   getUserid: async (request, response) => {
@@ -37,14 +38,15 @@ module.exports = {
         let dataExperience = []
         const experience = await getExperienceByUserId(id)
 
-
         if (experience.length > 0) {
           for (let i = 0; i < experience.length; i++) {
+            let resign = (experience[i].resign === null) ? "" : experience[i].resign
             let data = {
               id_company: experience[i].id,
               company: experience[i].company,
               position: experience[i].position,
-              date: experience[i].date,
+              date: experience[i].date_work,
+              date_resign: resign,
               description: experience[i].description,
             };
             dataExperience = [...dataExperience, data];
@@ -52,6 +54,7 @@ module.exports = {
         } else {
           dataExperience = [...dataExperience, "your experience is empty"];
         }
+
 
         let dataPortofolio = [];
         const portofolio = await getPortofolioByUserId(id);
