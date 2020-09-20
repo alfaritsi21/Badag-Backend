@@ -1,9 +1,16 @@
 const connection = require("../../config/mysql");
 
 module.exports = {
-  new_hiring_notif: (id_worker) => {
+  sendNotifHiring: (dataWorker) => {
     return new Promise((resolve, reject) => {
-      connection.query("INSERT INTO notification SET ?", id_worker, (error, result) => {
+      connection.query("INSERT INTO notification SET ?", dataWorker, (error, result) => {
+        !error ? resolve(result) : reject(new Error(error));
+      });
+    });
+  },
+  sendNotifMessage: (dataNotif) => {
+    return new Promise((resolve, reject) => {
+      connection.query("INSERT INTO notification SET ?", dataNotif, (error, result) => {
         !error ? resolve(result) : reject(new Error(error));
       });
     });

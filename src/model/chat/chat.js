@@ -23,7 +23,6 @@ module.exports = {
     });
   },
   post_message_model: (setData) => {
-    console.log(setData)
     return new Promise((resolve, reject) => {
       connection.query("INSERT INTO message SET ?", setData, (error, result) => {
         if (!error) {

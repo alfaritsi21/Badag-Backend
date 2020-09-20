@@ -2,6 +2,7 @@ const helper = require("../helper/index")
 
 const { getJobTypeById } = require("../model/jobType")
 const { postRoomChat, postMessage } = require("../model/hiring")
+const { sendNotifHiring } = require("../model/navbar/Navbar")
 
 module.exports = {
     postMessageHiring: async (request, response) => {
@@ -22,6 +23,13 @@ module.exports = {
                             }
                             await postRoomChat(userCreate)
 
+                            const dataNotif = {
+                                title: 0,
+                                id_sender: company_id,
+                                id_worker: user_id,
+                                status: 0
+                            }
+                            await sendNotifHiring(dataNotif)
 
                             const jobType = await getJobTypeById(jobType_id)
 
