@@ -55,6 +55,24 @@ module.exports = {
       return helper.response(response, 400, "Bad Request", error);
     }
   },
+  getPortofolioById: async (request, response) => {
+    try {
+      const { id } = request.params;
+      const check = await getPortofolioById(id);
+      if (check.length > 0) {
+        return helper.response(
+          response,
+          200,
+          "success get portofolio by id",
+          check
+        );
+      } else {
+        return helper.response(response, 404, "portofolio not found");
+      }
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error);
+    }
+  },
   getPortofolioByUserId: async (request, response) => {
     try {
       const { id } = request.params;

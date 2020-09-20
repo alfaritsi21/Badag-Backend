@@ -26,6 +26,7 @@ module.exports = {
       user_password: password_encrypt,
       user_status: 0,
       user_created_at: new Date(),
+      role_id: 1
     };
     try {
       if (form_data.user_name === "") {
@@ -98,6 +99,7 @@ module.exports = {
       company_password: password_encrypt,
       company_status: 0,
       company_created_at: new Date(),
+      role_id: 2
     };
     try {
       if (form_data.company_username === "") {

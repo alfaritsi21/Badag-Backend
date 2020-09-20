@@ -22,6 +22,8 @@ module.exports = {
                     company_name,
                     company_position,
                     company_phone,
+                    company_place,
+                    company_field,
                     company_description,
                     company_instagram,
                     company_linkedin,
@@ -37,6 +39,8 @@ module.exports = {
                     company_name,
                     company_position,
                     company_phone,
+                    company_place,
+                    company_field,
                     company_description,
                     company_instagram,
                     company_linkedin,
@@ -77,7 +81,8 @@ module.exports = {
                                 throw err;
                             } else {
                                 const setData = {
-                                    company_image: image
+                                    company_image: image,
+                                    company_updated_at: new Date
                                 }
 
                                 const result = await patchUserCompany(setData, id);
@@ -117,7 +122,8 @@ module.exports = {
                                 throw err;
                             } else {
                                 const setData = {
-                                    company_cover_image: image
+                                    company_cover_image: image,
+                                    company_updated_at: new Date
                                 }
 
                                 const result = await patchUserCompany(setData, id);
@@ -157,7 +163,8 @@ module.exports = {
                                 company_email,
                                 company_instagram,
                                 company_phone,
-                                company_linkedin
+                                company_linkedin,
+                                company_updated_at: new Date
                             }
 
                             const result = await patchUserCompany(setData, id)

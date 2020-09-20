@@ -15,6 +15,7 @@ const client = redis.createClient();
 const fs = require("fs");
 const { getExperienceByUserId } = require("../model/Experience");
 const { getPortofolioByUserId } = require("../model/Portofolio");
+const Experience = require("../model/Experience");
 
 module.exports = {
   getUserid: async (request, response) => {
@@ -35,15 +36,21 @@ module.exports = {
         }
 
         let dataExperience = [];
+        let resign = [];
         const experience = await getExperienceByUserId(id);
 
         if (experience.length > 0) {
           for (let i = 0; i < experience.length; i++) {
+            let resign =
+              experience[i].date_resign === null
+                ? ""
+                : experience[i].date_resign;
             let data = {
               id_company: experience[i].id,
               company: experience[i].company,
               position: experience[i].position,
               date: experience[i].date,
+              date_resign: resign,
               description: experience[i].description,
             };
             dataExperience = [...dataExperience, data];
@@ -62,6 +69,7 @@ module.exports = {
               app_name: portofolio[i].app_name,
               app_type: portofolio[i].type_portofolio,
               image_app: portofolio[i].image_portofolio,
+              link_repository: portofolio[i].link_repository,
             };
 
             dataPortofolio = [...dataPortofolio, data];
@@ -81,6 +89,9 @@ module.exports = {
           place: user[0].user_location,
           work_location: user[0].user_work_location,
           user_description: user[0].user_description,
+          github: user[0].user_github,
+          linkedin: user[0].user_linkedin,
+          instagram: user[0].user_instagram,
           skills: dataSkill,
           experience: dataExperience,
           portofolio: dataPortofolio,
@@ -161,6 +172,9 @@ module.exports = {
         user_location,
         user_work_location,
         user_description,
+        user_linkedin,
+        user_github,
+        user_instagram,
       } = request.body;
       const user = await getUserByid(id);
       if (user.length > 0) {
@@ -174,6 +188,9 @@ module.exports = {
                   user_time_job,
                   user_location,
                   user_work_location,
+                  user_linkedin,
+                  user_instagram,
+                  user_github,
                   user_description,
                 };
                 const result = await patchUser(setData, id);
