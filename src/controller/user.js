@@ -116,43 +116,43 @@ module.exports = {
       const user = await getUserByid(id);
       if (user.length > 0) {
         let image = request.file === undefined ? "" : request.file.filename;
-        if (image !== "") {
-          if (user[0].user_image === "profile.png") {
-            const setData = {
-              user_image: image,
-            };
-            const result = await patchUser(setData, id);
-            return helper.response(
-              response,
-              200,
-              "profile image success updated",
-              result
-            );
-          } else {
-            fs.unlink(`./uploads/${user[0].user_image}`, async (err) => {
-              if (err) {
-                throw err;
-              } else {
-                const setData = {
-                  user_image: image,
-                };
-                const result = await patchUser(setData, id);
-                return helper.response(
-                  response,
-                  200,
-                  "profile image success updated",
-                  result
-                );
-              }
-            });
-          }
-        } else {
+        // if (image !== "") {
+        if (user[0].user_image === "") {
+          const setData = {
+            user_image: image,
+          };
+          const result = await patchUser(setData, id);
           return helper.response(
             response,
             200,
-            `please upload new profile first`
+            "profile image success updated",
+            result
           );
+        } else {
+          fs.unlink(`./uploads/${user[0].user_image}`, async (err) => {
+            if (err) {
+              throw err;
+            } else {
+              const setData = {
+                user_image: image,
+              };
+              const result = await patchUser(setData, id);
+              return helper.response(
+                response,
+                200,
+                "profile image success updated",
+                result
+              );
+            }
+          });
         }
+        // } else {
+        //   return helper.response(
+        //     response,
+        //     200,
+        //     `please upload new profile first`
+        //   );
+        // }
       } else {
         return helper.response(response, 200, `data user id ${id} not found`);
       }

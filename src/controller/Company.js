@@ -67,32 +67,32 @@ module.exports = {
             const company = await getUserCompanyByid(id)
             if (company.length > 0) {
                 let image = request.file === undefined ? "" : request.file.filename
-                if (image !== "") {
-                    if (company[0].company_image === "") {
-                        const setData = {
-                            company_image: image
-                        }
-                        const result = await patchUserCompany(setData, id);
-                        return helper.response(response, 200, "profile image company success updated", result);
-                    } else {
-
-                        fs.unlink(`./uploads/${company[0].company_image}`, async (err) => {
-                            if (err) {
-                                throw err;
-                            } else {
-                                const setData = {
-                                    company_image: image,
-                                    company_updated_at: new Date
-                                }
-
-                                const result = await patchUserCompany(setData, id);
-                                return helper.response(response, 200, "profile image company success updated", result);
-                            }
-                        });
+                // if (image !== "") {
+                if (company[0].company_image === "") {
+                    const setData = {
+                        company_image: image
                     }
+                    const result = await patchUserCompany(setData, id);
+                    return helper.response(response, 200, "profile image company success updated", result);
                 } else {
-                    return helper.response(response, 200, `please upload new profile first`);
+
+                    fs.unlink(`./uploads/${company[0].company_image}`, async (err) => {
+                        if (err) {
+                            throw err;
+                        } else {
+                            const setData = {
+                                company_image: image,
+                                company_updated_at: new Date
+                            }
+
+                            const result = await patchUserCompany(setData, id);
+                            return helper.response(response, 200, "profile image company success updated", result);
+                        }
+                    });
                 }
+                // } else {
+                //     return helper.response(response, 200, `please upload new profile first`);
+                // }
             } else {
                 return helper.response(response, 200, `data user id ${id} not found`);
             }
@@ -108,32 +108,32 @@ module.exports = {
             const company = await getUserCompanyByid(id)
             if (company.length > 0) {
                 let image = request.file === undefined ? "" : request.file.filename
-                if (image !== "") {
-                    if (company[0].company_cover_image === "") {
-                        const setData = {
-                            company_cover_image: image
-                        }
-                        const result = await patchUserCompany(setData, id);
-                        return helper.response(response, 200, "profile image company success updated", result);
-                    } else {
-
-                        fs.unlink(`./uploads/${company[0].company_cover_image}`, async (err) => {
-                            if (err) {
-                                throw err;
-                            } else {
-                                const setData = {
-                                    company_cover_image: image,
-                                    company_updated_at: new Date
-                                }
-
-                                const result = await patchUserCompany(setData, id);
-                                return helper.response(response, 200, "cover image company success updated", result);
-                            }
-                        });
+                // if (image !== "") {
+                if (company[0].company_cover_image === "") {
+                    const setData = {
+                        company_cover_image: image
                     }
+                    const result = await patchUserCompany(setData, id);
+                    return helper.response(response, 200, "profile image company success updated", result);
                 } else {
-                    return helper.response(response, 200, `please upload cover image first`);
+
+                    fs.unlink(`./uploads/${company[0].company_cover_image}`, async (err) => {
+                        if (err) {
+                            throw err;
+                        } else {
+                            const setData = {
+                                company_cover_image: image,
+                                company_updated_at: new Date
+                            }
+
+                            const result = await patchUserCompany(setData, id);
+                            return helper.response(response, 200, "cover image company success updated", result);
+                        }
+                    });
                 }
+                // } else {
+                //     return helper.response(response, 200, `please upload cover image first`);
+                // }
             } else {
                 return helper.response(response, 200, `data company id ${id} not found`);
             }
