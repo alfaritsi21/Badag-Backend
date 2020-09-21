@@ -23,25 +23,36 @@ module.exports = {
         if (app_name !== "") {
           if (link_repository !== "") {
             let image = request.file === undefined ? "" : request.file.filename;
-
-            // if (image !== "") {
-            const data = {
-              user_id,
-              app_name,
-              link_repository,
-              type_portofolio,
-              image_portofolio: image,
-            };
-            const result = await postPortofolio(data);
-            return helper.response(
-              response,
-              200,
-              "success add portofolio",
-              result
-            );
-            // } else {
-            //   return helper.response(response, 400, "upload image portofolio");
-            // }
+            if (type_portofolio !== "") {
+              if (image !== "") {
+                const data = {
+                  user_id,
+                  app_name,
+                  link_repository,
+                  type_portofolio,
+                  image_portofolio: image,
+                };
+                const result = await postPortofolio(data);
+                return helper.response(
+                  response,
+                  200,
+                  "success add portofolio",
+                  result
+                );
+              } else {
+                return helper.response(
+                  response,
+                  400,
+                  "upload image portofolio"
+                );
+              }
+            } else {
+              return helper.response(
+                response,
+                400,
+                "please select portofolio type"
+              );
+            }
           } else {
             return helper.response(response, 400, "input link repository");
           }

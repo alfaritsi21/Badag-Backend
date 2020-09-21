@@ -111,45 +111,48 @@ module.exports = {
   updateImageProfile: async (request, response) => {
     try {
       const { id } = request.params;
+      const image = request.file === undefined ? "" : request.file.filename;
       const user = await getUserByid(id);
+      const setData = {
+        user_image: image,
+      };
       if (user.length > 0) {
-        let image = request.file === undefined ? "" : request.file.filename;
-        if (image !== "") {
-          if (user[0].user_image === "profile.png") {
-            const setData = {
-              user_image: image,
-            };
+        if (user[0].user_image !== "") {
+          fs.unlink(`./uploads/${user[0].user_image}`, function (err) {
+            if (err) throw err;
+            console.log("File img deleted! ready to patch");
+          });
+          if (user.length > 0) {
             const result = await patchUser(setData, id);
             return helper.response(
               response,
               200,
-              "profile image success updated",
+              "Profile image Updated",
               result
             );
           } else {
-            fs.unlink(`./uploads/${user[0].user_image}`, async (err) => {
-              if (err) {
-                throw err;
-              } else {
-                const setData = {
-                  user_image: image,
-                };
-                const result = await patchUser(setData, id);
-                return helper.response(
-                  response,
-                  200,
-                  "profile image success updated",
-                  result
-                );
-              }
-            });
+            return helper.response(
+              response,
+              404,
+              `User By Id: ${id} Not Found`
+            );
           }
         } else {
-          return helper.response(
-            response,
-            200,
-            `please upload new profile first`
-          );
+          if (user.length > 0) {
+            const result = await patchUser(setData, id);
+            return helper.response(
+              response,
+              200,
+              "Profile image Updated",
+              result
+            );
+          } else {
+            return helper.response(
+              response,
+              404,
+              `User By Id: ${id} Not Found`
+            );
+          }
         }
       } else {
         return helper.response(response, 200, `data user id ${id} not found`);
