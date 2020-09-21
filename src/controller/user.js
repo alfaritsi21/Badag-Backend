@@ -117,6 +117,7 @@ module.exports = {
         user_image: image,
       };
       if (user.length > 0) {
+<<<<<<< HEAD
         if (user[0].user_image !== "") {
           fs.unlink(`./uploads/${user[0].user_image}`, function (err) {
             if (err) throw err;
@@ -153,7 +154,46 @@ module.exports = {
               `User By Id: ${id} Not Found`
             );
           }
+=======
+        let image = request.file === undefined ? "" : request.file.filename;
+        // if (image !== "") {
+        if (user[0].user_image === "") {
+          const setData = {
+            user_image: image,
+          };
+          const result = await patchUser(setData, id);
+          return helper.response(
+            response,
+            200,
+            "profile image success updated",
+            result
+          );
+        } else {
+          fs.unlink(`./uploads/${user[0].user_image}`, async (err) => {
+            if (err) {
+              throw err;
+            } else {
+              const setData = {
+                user_image: image,
+              };
+              const result = await patchUser(setData, id);
+              return helper.response(
+                response,
+                200,
+                "profile image success updated",
+                result
+              );
+            }
+          });
+>>>>>>> a983be175acb9d57316bccc6c93b54fcbb6c8609
         }
+        // } else {
+        //   return helper.response(
+        //     response,
+        //     200,
+        //     `please upload new profile first`
+        //   );
+        // }
       } else {
         return helper.response(response, 200, `data user id ${id} not found`);
       }
