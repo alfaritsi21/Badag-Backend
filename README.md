@@ -31,11 +31,12 @@ Open .env file on your favorite code editor, and copy paste this code below :
 
 ```
 DB_HOST=localhost // Database Host
-DB_ROOT=root // Database Root
+DB_USER=root // Database Root
 DB_PASSWORD= // Password set for database is empty
 DB_DATABASE=badag // Database
 DB_PORT=3001 // PORT
 DB_IP=127.0.0.1 // IP
+url_frontend= url frontend
 ```
 
 ## End Point
