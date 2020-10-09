@@ -76,7 +76,6 @@ module.exports = {
         page_info
       );
     } catch (error) {
-      console.log(sort_data);
       return helper.response(response, 400, "Bad Request", error);
     }
   },

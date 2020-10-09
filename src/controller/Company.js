@@ -71,7 +71,6 @@ module.exports = {
       const { id } = request.params;
       const company = await getUserCompanyByid(id);
       let image = request.file === undefined ? "" : request.file.filename;
-      console.log(image);
       if (company.length > 0) {
         if (image !== "") {
           if (company[0].company_image === "") {

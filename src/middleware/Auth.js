@@ -11,16 +11,12 @@ module.exports = {
           (error && error.name === "jsonwebTokenError") ||
           (error && error.name === "TokenExpiredError")
         ) {
-          console.log("Yang ini A");
-          console.log(error.expiredAt);
           return helper.response(response, 403, error.message);
         } else {
           if (result.user_status !== 0) {
-            console.log(result);
             request.token = result;
             next();
           } else {
-            console.log(result);
             return helper.response(
               response,
               400,

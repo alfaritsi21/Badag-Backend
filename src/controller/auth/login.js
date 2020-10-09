@@ -120,7 +120,9 @@ module.exports = {
                   company_status,
                 };
 
-                const token = jwt.sign(payload, "SECRETS", { expiresIn: "1h" });
+                const token = jwt.sign(payload, "SECRETS", {
+                  expiresIn: "24h",
+                });
                 payload = { ...payload, token };
                 return helper.response(response, 200, "Login success", payload);
               } else {

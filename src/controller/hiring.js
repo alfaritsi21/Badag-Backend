@@ -37,7 +37,7 @@ module.exports = {
                 receive: user_id,
                 sender: company_id,
                 roomchat_id: meething_id,
-                message: `From : ${name}</br> ${jobType[0].job_name}   contact : ${email}, ${phone}. <br> <p>${message}<p>`,
+                message: message,
                 created_at: new Date(),
               };
               const dataNotif = {
@@ -50,7 +50,6 @@ module.exports = {
 
               await postMessage(data);
 
-              // console.log(result)
               return helper.response(
                 response,
                 200,
