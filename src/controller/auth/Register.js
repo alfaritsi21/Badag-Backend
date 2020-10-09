@@ -24,9 +24,9 @@ module.exports = {
       user_email: email,
       user_phone: phone,
       user_password: password_encrypt,
-      user_status: 0,
+      user_status: 1,
       user_created_at: new Date(),
-      role_id: 1
+      role_id: 1,
     };
     try {
       if (form_data.user_name === "") {
@@ -63,14 +63,14 @@ module.exports = {
           return helper.response(response, 400, "Password doesn't match");
         } else {
           const data_result = await post_worker(form_data);
-          const id = data_result.result.insertId;
-          const link = `http://127.0.0.1:3001/users/activation/${id}`;
-          mailer.send(
-            "a1.arifrahman.1213@gmail.com",
-            "Aktivasi woy",
-            "Haiiiiii",
-            mailTemplate.activation(link)
-          );
+          // const id = data_result.result.insertId;
+          // const link = `process.env.url_frontend`;
+          // mailer.send(
+          //   "a1.arifrahman.1213@gmail.com",
+          //   "Aktivasi woy",
+          //   "Haiiiiii",
+          //   mailTemplate.activation(link)
+          // );
           return helper.response(response, 200, "Register Success", form_data);
         }
       }
@@ -97,9 +97,9 @@ module.exports = {
       company_position: position,
       company_phone: phone,
       company_password: password_encrypt,
-      company_status: 0,
+      company_status: 1,
       company_created_at: new Date(),
-      role_id: 2
+      role_id: 2,
     };
     try {
       if (form_data.company_username === "") {
@@ -151,14 +151,14 @@ module.exports = {
           return helper.response(response, 400, "Password doesn't match");
         } else {
           const data_result = await post_recruiter(form_data);
-          const id = data_result.result.insertId;
-          const link = `http://127.0.0.1:3001/users/activation-company/${id}`;
-          mailer.send(
-            "a1.arifrahman.1213@gmail.com",
-            "Aktivasi woy",
-            "Haiiiiii",
-            mailTemplate.activation(link)
-          );
+          // const id = data_result.result.insertId;
+          // const link = `process.env.url_frontend`;
+          // mailer.send(
+          //   "a1.arifrahman.1213@gmail.com",
+          //   "Aktivasi woy",
+          //   "Haiiiiii",
+          //   mailTemplate.activation(link)
+          // );
           return helper.response(response, 200, "Register Success", form_data);
         }
       }
