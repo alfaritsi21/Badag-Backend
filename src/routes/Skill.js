@@ -9,6 +9,6 @@ const { clearDataRedis } = require("../middleware/Redis");
 
 router.post("/", authUser, clearDataRedis, addSkillByUserId);
 router.get("/:id", authUser, getSkillByUserId);
-router.delete("/:id", authUser, clearDataRedis, deleteSkill);
+router.delete("/:id/:skill", authUser, clearDataRedis, deleteSkill);
 
 module.exports = router;

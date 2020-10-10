@@ -39,17 +39,18 @@ module.exports = {
         }
     },
     deleteSkill: async (request, response) => {
+            const id = request.params.id
+            const skill = request.params.skill
         try {
-            const id = request.params.id;
-            const checkId = await getSkillById(id);
+            const checkId = await getSkillByUserId(id);
             if (checkId.length > 0) {
-
-                const result = await deleteSkill(id);
+                const result = await deleteSkill(id, skill);
                 return helper.response(response, 200, "Skill Deleted", result);
             } else {
-                return helper.response(response, 404, `skill id : ${id} not found`);
+                return helper.response(response, 404, `user id : ${id} not found`);
             }
         } catch (error) {
+            console.log(error);
             return helper.response(response, 400, "Bad Request", error);
         }
     },

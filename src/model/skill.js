@@ -34,10 +34,10 @@ module.exports = {
         })
     },
 
-    deleteSkill: (id) => {
+    deleteSkill: (id, skill) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                "DELETE FROM skills WHERE id = ?",
+                `DELETE FROM skills WHERE id_user = ? && skill = '${skill}'`,
                 id,
                 (error, result) => {
                     if (!error) {
