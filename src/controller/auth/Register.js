@@ -163,7 +163,7 @@ module.exports = {
         }
       }
     } catch (error) {
-      return helper.response(response, 400, "Bad Request");
+      return helper.response(response, 400, "Bad Request", error);
     }
   },
 };
