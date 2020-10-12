@@ -7,6 +7,8 @@ module.exports = {
         'SELECT id,id_user,company,position, DATE_FORMAT(date, "%Y-%m-%d") AS date_work, DATE_FORMAT(date_resign, "%Y-%m-%d") AS resign, description FROM `experiences` WHERE id_user = ?',
         id,
         (error, result) => {
+          console.log(error)
+          console.log(result)
           !error ? resolve(result) : reject(new Error(error));
         }
       );

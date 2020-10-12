@@ -5,6 +5,8 @@ module.exports = {
     getPortofolioByUserId: (id) => {
         return new Promise((resolve, reject) => {
             connection.query("SELECT * FROM Portofolio WHERE user_id = ?", id, (error, result) => {
+                console.log(error)
+                console.log(result)
                 !error ? resolve(result) : reject(new Error(error))
             })
         })
