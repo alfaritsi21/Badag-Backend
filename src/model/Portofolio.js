@@ -4,7 +4,7 @@ module.exports = {
 
     getPortofolioByUserId: (id) => {
         return new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM Portofolio WHERE user_id = ?", id, (error, result) => {
+            connection.query("SELECT * FROM portofolio WHERE user_id = ?", id, (error, result) => {
                 console.log(error)
                 console.log(result)
                 !error ? resolve(result) : reject(new Error(error))
@@ -14,7 +14,7 @@ module.exports = {
 
     postPortofolio: (data) => {
         return new Promise((resolve, reject) => {
-            connection.query("INSERT INTO Portofolio SET ?", data, (error, result) => {
+            connection.query("INSERT INTO portofolio SET ?", data, (error, result) => {
                 if (!error) {
                     const newResult = {
                         id: result.insertId,
@@ -30,7 +30,7 @@ module.exports = {
 
     getPortofolioById: (id) => {
         return new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM Portofolio WHERE portofolio_id = ?", id, (error, result) => {
+            connection.query("SELECT * FROM portofolio WHERE portofolio_id = ?", id, (error, result) => {
                 !error ? resolve(result) : reject(new Error(error))
             })
         })
@@ -39,7 +39,7 @@ module.exports = {
     deletePortofolio: (id) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                "DELETE FROM Portofolio WHERE portofolio_id = ?",
+                "DELETE FROM portofolio WHERE portofolio_id = ?",
                 id,
                 (error, result) => {
                     if (!error) {
